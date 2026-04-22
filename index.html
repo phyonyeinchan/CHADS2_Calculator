@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AF Risk Score Calculators</title>
+    <meta name="description" content="Calculate CHA₂DS₂-VASc and HAS-BLED scores for atrial fibrillation.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AF Risk Calculators</h1>
+            <p>Stroke & Bleeding Risk Assessment in Atrial Fibrillation</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-target="chads-tab">CHA₂DS₂-VASc (Stroke Risk)</button>
+            <button class="tab-btn" data-target="hasbled-tab">HAS-BLED (Bleeding Risk)</button>
+        </div>
+
+        <main>
+            <!-- CHA2DS2-VASc TAB -->
+            <div id="chads-tab" class="tab-content active calculator-grid">
+                <section class="input-section">
+                    <form id="chads-form">
+                        <div class="form-group radio-group">
+                            <label class="group-label">Age</label>
+                            <div class="radio-options">
+                                <label class="radio-card">
+                                    <input type="radio" name="age" value="0" checked>
+                                    <span class="card-content">
+                                        <span class="title">< 65 years</span>
+                                        <span class="points">0 points</span>
+                                    </span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="age" value="1">
+                                    <span class="card-content">
+                                        <span class="title">65 - 74 years</span>
+                                        <span class="points">+1 point</span>
+                                    </span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="age" value="2">
+                                    <span class="card-content">
+                                        <span class="title">≥ 75 years</span>
+                                        <span class="points">+2 points</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group radio-group">
+                            <label class="group-label">Sex</label>
+                            <div class="radio-options">
+                                <label class="radio-card">
+                                    <input type="radio" name="sex" value="0" checked>
+                                    <span class="card-content">
+                                        <span class="title">Male</span>
+                                        <span class="points">0 points</span>
+                                    </span>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="sex" value="1">
+                                    <span class="card-content">
+                                        <span class="title">Female</span>
+                                        <span class="points">+1 point</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="group-label">Clinical History</label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="chf" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Congestive Heart Failure</span>
+                                    <span class="subtitle">Clinical HF or LVEF ≤ 40%</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="htn" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Hypertension</span>
+                                    <span class="subtitle">History of HTN or currently on meds</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="stroke" value="2">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Stroke / TIA / Thromboembolism</span>
+                                    <span class="subtitle">Prior history</span>
+                                </div>
+                                <span class="points">+2</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="vascular" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Vascular Disease</span>
+                                    <span class="subtitle">Prior MI, PAD, or aortic plaque</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="diabetes" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Diabetes Mellitus</span>
+                                    <span class="subtitle">Fasting glucose >125 mg/dL or on meds</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="result-section">
+                    <div class="result-card">
+                        <h2>CHA₂DS₂-VASc Score</h2>
+                        <div class="score-display">
+                            <span id="chads-total-score">0</span>
+                            <span class="max-score">/ 9</span>
+                        </div>
+                        
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Annual Stroke Risk:</span>
+                                <span class="detail-value highlight" id="stroke-risk">0.2%</span>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-box" id="chads-recommendation-box">
+                            <h3>ESC Recommendation</h3>
+                            <p id="chads-recommendation-text">No antithrombotic therapy is recommended.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- HAS-BLED TAB -->
+            <div id="hasbled-tab" class="tab-content calculator-grid" style="display: none;">
+                <section class="input-section">
+                    <form id="hasbled-form">
+                        <div class="form-group checkbox-group">
+                            <label class="group-label">Clinical Criteria (1 point each)</label>
+                            
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-htn" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Hypertension</span>
+                                    <span class="subtitle">Uncontrolled, systolic BP >160 mmHg</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-renal" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Abnormal Renal Function</span>
+                                    <span class="subtitle">Dialysis, transplant, Cr >2.26 mg/dL (>200 µmol/L)</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-liver" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Abnormal Liver Function</span>
+                                    <span class="subtitle">Cirrhosis or Bilirubin >2x Normal or AST/ALT/AP >3x Normal</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-stroke" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Stroke History</span>
+                                    <span class="subtitle">Previous history of stroke</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-bleeding" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Bleeding History or Predisposition</span>
+                                    <span class="subtitle">Prior major bleeding or predisposition to bleeding</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-labile" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Labile INRs</span>
+                                    <span class="subtitle">Unstable/high INRs or Time in Therapeutic Range < 60%</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-elderly" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Elderly</span>
+                                    <span class="subtitle">Age > 65 years</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-drugs" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Drugs Predisposing to Bleeding</span>
+                                    <span class="subtitle">Antiplatelet agents, NSAIDs</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" id="hb-alcohol" value="1">
+                                <span class="checkmark"></span>
+                                <div class="card-text">
+                                    <span class="title">Alcohol Use</span>
+                                    <span class="subtitle">≥ 8 drinks per week</span>
+                                </div>
+                                <span class="points">+1</span>
+                            </label>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="result-section">
+                    <div class="result-card">
+                        <h2>HAS-BLED Score</h2>
+                        <div class="score-display">
+                            <span id="hasbled-total-score">0</span>
+                            <span class="max-score">/ 9</span>
+                        </div>
+
+                        <div class="recommendation-box" id="hasbled-recommendation-box">
+                            <h3>Bleeding Risk Assessment</h3>
+                            <p id="hasbled-recommendation-text">Low bleeding risk. Review regularly.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Disclaimer: This calculator is for educational and informational purposes only. It does not replace professional medical advice.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
