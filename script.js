@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Checkbox Styling Logic ---
     const checkboxes = document.querySelectorAll('.checkbox-card input[type="checkbox"]');
     checkboxes.forEach(cb => {
-        cb.addEventListener('change', function() {
+        cb.addEventListener('change', function () {
             if (this.checked) {
                 this.closest('.checkbox-card').classList.add('checked');
             } else {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function calculateHasbledScore() {
         let score = 0;
         const hbIds = ['hb-htn', 'hb-renal', 'hb-liver', 'hb-stroke', 'hb-bleeding', 'hb-labile', 'hb-elderly', 'hb-drugs', 'hb-alcohol'];
-        
+
         hbIds.forEach(id => {
             const el = document.getElementById(id);
             if (el.checked) score += parseInt(el.value);
