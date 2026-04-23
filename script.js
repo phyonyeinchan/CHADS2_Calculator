@@ -1,3 +1,8 @@
+import { inject } from '@vercel/analytics';
+
+// Initialize Vercel Analytics
+inject({ mode: 'production' });
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Tabs Logic ---
     const tabBtns = document.querySelectorAll('.tab-btn');
